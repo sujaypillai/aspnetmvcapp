@@ -147,8 +147,10 @@ textarea:focus {
     transition: transform 0.3s ease, stroke 0.3s ease;
 }
 
-#theme-toggle:hover .theme-icon {
-    transform: rotate(180deg);
+@media (prefers-reduced-motion: no-preference) {
+    #theme-toggle:hover .theme-icon {
+        transform: rotate(180deg);
+    }
 }
 
 /* Secondary background */
