@@ -1,20 +1,151 @@
-﻿/* Set padding to keep content from hitting the edges */
+/*
+  ========================================
+  Theme Variables
+  ========================================
+*/
+
+:root {
+    /* Light Theme Defaults */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f0f0f0;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --accent-color: #007bff; /* Bootstrap primary blue */
+    --border-color: #cccccc;
+    --link-color: #007bff;
+    --link-hover-color: #0056b3;
+    --button-bg: var(--accent-color);
+    --button-text: #ffffff;
+
+    /* Transition for theme switching */
+    --transition-settings: 0.3s ease;
+}
+
+body.dark-mode {
+    /* Dark Theme Overrides */
+    --bg-primary: #1e1e1e;
+    --bg-secondary: #2a2a2a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #cccccc;
+    --accent-color: #60a5fa; /* A pleasing light blue for dark mode */
+    --border-color: #444444;
+    --link-color: #60a5fa;
+    --link-hover-color: #93c5fd;
+    --button-bg: var(--accent-color);
+    --button-text: #1e1e1e;
+}
+
+/*
+  ========================================
+  Global Styles & Theme Application
+  ========================================
+*/
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color var(--transition-settings), color var(--transition-settings);
+}
+
+a {
+    color: var(--link-color);
+    transition: color var(--transition-settings);
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+/*
+  ========================================
+  Original Application Styles (Themed)
+  ========================================
+*/
+
+/* Set padding to keep content from hitting the edges */
 .body-content {
     margin-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
+/* Override the default bootstrap behavior for horizontal description lists */
 .dl-horizontal dt {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
+/* Set width on form input elements and apply theme styles */
 input,
 select,
 textarea {
     max-width: 280px;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px; /* A touch of modern styling */
+    padding: 6px 12px; /* Consistent with Bootstrap defaults */
+    transition: background-color var(--transition-settings), 
+                color var(--transition-settings), 
+                border-color var(--transition-settings);
+}
+
+/* Accessibility Focus States (AC5) */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    border-color: var(--accent-color); /* Also change border for a cleaner look */
+}
+
+/*
+  ========================================
+  Theme Toggle Button (AC1, AC2, AC5)
+  ========================================
+*/
+
+.theme-toggle-button {
+    position: fixed; /* Positioned relative to the viewport */
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Ensure it's above other content */
+    transition: background-color var(--transition-settings), 
+                color var(--transition-settings), 
+                transform var(--transition-settings);
+}
+
+.theme-toggle-button:hover {
+    background-color: var(--accent-color);
+    color: var(--button-text);
+}
+
+.theme-toggle-button:focus-visible,
+.theme-toggle-button:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.theme-toggle-button .icon {
+    display: inline-block; /* Required for transform */
+    font-size: 24px;
+    line-height: 1; /* Prevents layout shifts */
+    transition: transform var(--transition-settings);
+}
+
+.theme-toggle-button.rotated .icon {
+    transform: rotate(180deg);
 }
