@@ -63,12 +63,12 @@ module "container_app" {
   source  = "Azure/avm-res-app-containerapp/azurerm"
   version = ">= 0.3.0"
 
-  name                            = var.container_app_name
-  location                        = module.resource_group.location
-  resource_group_name             = module.resource_group.name
-  managed_environment_resource_id = module.container_apps_environment.resource_id
-  revision_mode                   = var.container_app_revision_mode
-  tags                            = var.tags
+  name                                  = var.container_app_name
+  location                              = module.resource_group.location
+  resource_group_name                   = module.resource_group.name
+  container_app_environment_resource_id = module.container_apps_environment.resource_id
+  revision_mode                         = var.container_app_revision_mode
+  tags                                  = var.tags
 
   template = {
     containers = [
