@@ -13,6 +13,7 @@ terraform {
     storage_account_name = "sttfstateaspnetmvc"
     container_name       = "tfstate"
     key                  = "aspnetmvcapp.terraform.tfstate"
+    use_azuread_auth     = true
   }
 }
 
