@@ -27,7 +27,7 @@ variable "acr_name" {
 variable "acr_sku" {
   description = "Azure Container Registry SKU."
   type        = string
-  default     = "Basic"
+  default     = "Premium"
   validation {
     condition     = contains(["Basic", "Standard", "Premium"], var.acr_sku)
     error_message = "acr_sku must be one of Basic, Standard, or Premium."
