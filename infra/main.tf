@@ -26,11 +26,11 @@ module "log_analytics" {
   source  = "Azure/avm-res-operationalinsights-workspace/azurerm"
   version = ">= 0.3.0"
 
-  name                                        = var.log_analytics_workspace_name
-  location                                    = module.resource_group.location
-  resource_group_name                         = module.resource_group.name
-  log_analytics_workspace_retention_in_days   = var.log_analytics_retention_days
-  tags                                        = var.tags
+  name                                      = var.log_analytics_workspace_name
+  location                                  = module.resource_group.location
+  resource_group_name                       = module.resource_group.name
+  log_analytics_workspace_retention_in_days = var.log_analytics_retention_days
+  tags                                      = var.tags
 }
 
 module "container_registry" {
@@ -50,13 +50,13 @@ module "container_apps_environment" {
   source  = "Azure/avm-res-app-managedenvironment/azurerm"
   version = ">= 0.2.0"
 
-  name                              = var.container_apps_environment_name
-  location                          = module.resource_group.location
-  resource_group_name               = module.resource_group.name
+  name                                = var.container_apps_environment_name
+  location                            = module.resource_group.location
+  resource_group_name                 = module.resource_group.name
   log_analytics_workspace_customer_id = module.log_analytics.resource_id
-  infrastructure_subnet_id          = var.infrastructure_subnet_id
-  internal_load_balancer_enabled    = false
-  tags                              = var.tags
+  infrastructure_subnet_id            = var.infrastructure_subnet_id
+  internal_load_balancer_enabled      = false
+  tags                                = var.tags
 }
 
 module "container_app" {
