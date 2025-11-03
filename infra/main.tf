@@ -94,7 +94,7 @@ module "container_app" {
     transport        = var.container_app_ingress_transport
     traffic_weight = length(var.container_app_traffic_weights) > 0 ? var.container_app_traffic_weights : [{
       latest_revision = true
-      weight          = 100
+      percentage      = 100
     }]
   }
 
