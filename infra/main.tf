@@ -115,9 +115,8 @@ module "acr_pull_role" {
   source  = "Azure/avm-res-authorization-roleassignment/azurerm"
   version = ">= 0.1.0"
 
-  scope                      = module.container_registry.resource_id
-  principal_id               = module.container_app.system_assigned_identity_principal_id
-  role_definition_id_or_name = "AcrPull"
-
-  depends_on = [module.container_app]
+  scope                = module.container_registry.resource_id
+  principal_id         = module.container_app.system_assigned_identity_principal_id
+  role_definition_name = "AcrPull"
+  depends_on           = [module.container_app]
 }
