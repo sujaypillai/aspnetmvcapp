@@ -50,13 +50,13 @@ module "container_apps_environment" {
   source  = "Azure/avm-res-app-managedenvironment/azurerm"
   version = ">= 0.2.0"
 
-  name                                = var.container_apps_environment_name
-  location                            = var.location
-  resource_group_name                 = module.resource_group.name
-  log_analytics_workspace_customer_id = module.log_analytics.resource_id
-  infrastructure_subnet_id            = var.infrastructure_subnet_id
-  internal_load_balancer_enabled      = false
-  tags                                = var.tags
+  name                           = var.container_apps_environment_name
+  location                       = var.location
+  resource_group_name            = module.resource_group.name
+  log_analytics_workspace        = { resource_id = module.log_analytics.resource.workspace_id }
+  infrastructure_subnet_id       = var.infrastructure_subnet_id
+  internal_load_balancer_enabled = false
+  tags                           = var.tags
 }
 
 module "container_app" {
