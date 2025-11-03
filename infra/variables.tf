@@ -103,7 +103,7 @@ variable "container_app_scale_rules" {
 
 variable "container_app_environment_variables" {
   description = "Environment variables injected into the container definition."
-  type        = list(object({
+  type = list(object({
     name      = string
     value     = optional(string)
     secretRef = optional(string)
@@ -123,7 +123,7 @@ variable "container_app_revision_mode" {
 
 variable "container_app_traffic_weights" {
   description = "Optional traffic weight configuration when using multiple revisions."
-  type        = list(object({
+  type = list(object({
     latest_revision = optional(bool)
     revision        = optional(string)
     weight          = number

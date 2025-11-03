@@ -37,44 +37,44 @@ module "container_registry" {
   source  = "Azure/avm-res-az-containerregistry/azurerm"
   version = ">= 0.2.0"
 
-  name                = var.acr_name
-  location            = module.resource_group.location
-  resource_group_name = module.resource_group.name
-  sku                 = var.acr_sku
-  admin_enabled       = false
+  name                          = var.acr_name
+  location                      = module.resource_group.location
+  resource_group_name           = module.resource_group.name
+  sku                           = var.acr_sku
+  admin_enabled                 = false
   public_network_access_enabled = true
-  tags                = var.tags
+  tags                          = var.tags
 }
 
 module "container_apps_environment" {
   source  = "Azure/avm-res-az-containerappenvironment/azurerm"
   version = ">= 0.2.0"
 
-  name                                      = var.container_apps_environment_name
-  location                                  = module.resource_group.location
-  resource_group_name                       = module.resource_group.name
-  log_analytics_workspace_resource_id       = module.log_analytics.resource_id
-  infrastructure_subnet_resource_id         = var.infrastructure_subnet_id
-  internal_only                              = false
-  tags                                      = var.tags
+  name                                = var.container_apps_environment_name
+  location                            = module.resource_group.location
+  resource_group_name                 = module.resource_group.name
+  log_analytics_workspace_resource_id = module.log_analytics.resource_id
+  infrastructure_subnet_resource_id   = var.infrastructure_subnet_id
+  internal_only                       = false
+  tags                                = var.tags
 }
 
 module "container_app" {
   source  = "Azure/avm-res-az-containerapp/azurerm"
   version = ">= 0.3.0"
 
-  name                                      = var.container_app_name
-  location                                  = module.resource_group.location
-  resource_group_name                       = module.resource_group.name
-  container_app_environment_resource_id     = module.container_apps_environment.resource_id
-  revision_mode                              = var.container_app_revision_mode
-  tags                                      = var.tags
+  name                                  = var.container_app_name
+  location                              = module.resource_group.location
+  resource_group_name                   = module.resource_group.name
+  container_app_environment_resource_id = module.container_apps_environment.resource_id
+  revision_mode                         = var.container_app_revision_mode
+  tags                                  = var.tags
 
   template = {
     containers = [
       {
-        name      = "app"
-        image     = var.container_app_image
+        name  = "app"
+        image = var.container_app_image
         resources = {
           cpu    = var.container_cpu
           memory = var.container_memory
@@ -115,8 +115,8 @@ module "acr_pull_role" {
   source  = "Azure/avm-res-az-authorization-roleassignment/azurerm"
   version = ">= 0.1.0"
 
-  scope                = module.container_registry.resource_id
-  principal_id         = module.container_app.system_assigned_identity_principal_id
+  scope                      = module.container_registry.resource_id
+  principal_id               = module.container_app.system_assigned_identity_principal_id
   role_definition_id_or_name = "AcrPull"
 
   depends_on = [module.container_app]
