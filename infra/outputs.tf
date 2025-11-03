@@ -5,7 +5,7 @@ output "resource_group_name" {
 
 output "container_registry_login_server" {
   description = "Login server for the Azure Container Registry."
-  value       = module.container_registry.login_server
+  value       = module.container_registry.resource.login_server
 }
 
 output "container_app_environment_id" {
@@ -15,10 +15,10 @@ output "container_app_environment_id" {
 
 output "container_app_fqdn" {
   description = "Fully qualified domain name of the deployed container app."
-  value       = module.container_app.fqdn
+  value       = module.container_app.fqdn_url
 }
 
 output "container_app_identity_principal_id" {
   description = "Principal ID of the container app system-assigned managed identity."
-  value       = module.container_app.system_assigned_identity_principal_id
+  value       = module.container_app.identity.principal_id
 }

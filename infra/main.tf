@@ -112,6 +112,6 @@ module "container_app" {
 
 resource "azurerm_role_assignment" "acr_pull" {
   scope                = module.container_registry.resource_id
-  principal_id         = module.container_app.system_assigned_mi_principal_id
+  principal_id         = module.container_app.identity.principal_id
   role_definition_name = "AcrPull"
 }
