@@ -73,12 +73,10 @@ module "container_app" {
   template = {
     containers = [
       {
-        name  = "app"
-        image = var.container_app_image
-        resources = {
-          cpu    = var.container_cpu
-          memory = var.container_memory
-        }
+        name   = "app"
+        image  = var.container_app_image
+        cpu    = var.container_cpu
+        memory = var.container_memory
         probes = []
         env    = var.container_app_environment_variables
       }
@@ -94,15 +92,16 @@ module "container_app" {
     external_enabled = var.container_app_ingress_external
     target_port      = var.container_app_target_port
     transport        = var.container_app_ingress_transport
-    traffic_weights  = var.container_app_traffic_weights
+    traffic_weight = length(var.container_app_traffic_weights) > 0 ? var.container_app_traffic_weights : [{
+      latest_revision = true
+      weight          = 100
+    }]
   }
 
   registries = [
     {
-      server = module.container_registry.resource.login_server
-      identity = {
-        use_system_assigned_managed_identity = true
-      }
+      server   = module.container_registry.resource.login_server
+      identity = "SystemAssigned"
     }
   ]
 
