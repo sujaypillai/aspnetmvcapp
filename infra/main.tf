@@ -26,11 +26,11 @@ module "log_analytics" {
   source  = "Azure/avm-res-operationalinsights-workspace/azurerm"
   version = ">= 0.3.0"
 
-  name                = var.log_analytics_workspace_name
-  location            = module.resource_group.location
-  resource_group_name = module.resource_group.name
-  retention_in_days   = var.log_analytics_retention_days
-  tags                = var.tags
+  name                                        = var.log_analytics_workspace_name
+  location                                    = module.resource_group.location
+  resource_group_name                         = module.resource_group.name
+  log_analytics_workspace_retention_in_days   = var.log_analytics_retention_days
+  tags                                        = var.tags
 }
 
 module "container_registry" {
@@ -50,25 +50,25 @@ module "container_apps_environment" {
   source  = "Azure/avm-res-app-managedenvironment/azurerm"
   version = ">= 0.2.0"
 
-  name                                = var.container_apps_environment_name
-  location                            = module.resource_group.location
-  resource_group_name                 = module.resource_group.name
-  log_analytics_workspace_resource_id = module.log_analytics.resource_id
-  infrastructure_subnet_resource_id   = var.infrastructure_subnet_id
-  internal_only                       = false
-  tags                                = var.tags
+  name                              = var.container_apps_environment_name
+  location                          = module.resource_group.location
+  resource_group_name               = module.resource_group.name
+  log_analytics_workspace_customer_id = module.log_analytics.resource_id
+  infrastructure_subnet_id          = var.infrastructure_subnet_id
+  internal_load_balancer_enabled    = false
+  tags                              = var.tags
 }
 
 module "container_app" {
   source  = "Azure/avm-res-app-containerapp/azurerm"
   version = ">= 0.3.0"
 
-  name                                  = var.container_app_name
-  location                              = module.resource_group.location
-  resource_group_name                   = module.resource_group.name
-  container_app_environment_resource_id = module.container_apps_environment.resource_id
-  revision_mode                         = var.container_app_revision_mode
-  tags                                  = var.tags
+  name                            = var.container_app_name
+  location                        = module.resource_group.location
+  resource_group_name             = module.resource_group.name
+  managed_environment_resource_id = module.container_apps_environment.resource_id
+  revision_mode                   = var.container_app_revision_mode
+  tags                            = var.tags
 
   template = {
     containers = [
@@ -99,15 +99,15 @@ module "container_app" {
 
   registries = [
     {
-      server = module.container_registry.login_server
+      server = module.container_registry.resource.login_server
       identity = {
         use_system_assigned_managed_identity = true
       }
     }
   ]
 
-  identity = {
-    type = "SystemAssigned"
+  managed_identities = {
+    system_assigned = true
   }
 }
 
