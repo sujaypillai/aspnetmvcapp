@@ -20,5 +20,5 @@ output "container_app_fqdn" {
 
 output "container_app_identity_principal_id" {
   description = "Principal ID of the container app system-assigned managed identity."
-  value       = module.container_app.identity.principal_id
+  value       = module.container_app.identity[0].principal_id
 }
