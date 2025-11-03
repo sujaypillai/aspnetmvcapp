@@ -27,7 +27,7 @@ module "log_analytics" {
   version = ">= 0.3.0"
 
   name                                      = var.log_analytics_workspace_name
-  location                                  = module.resource_group.location
+  location                                  = var.location
   resource_group_name                       = module.resource_group.name
   log_analytics_workspace_retention_in_days = var.log_analytics_retention_days
   tags                                      = var.tags
@@ -38,7 +38,7 @@ module "container_registry" {
   version = ">= 0.2.0"
 
   name                          = var.acr_name
-  location                      = module.resource_group.location
+  location                      = var.location
   resource_group_name           = module.resource_group.name
   sku                           = var.acr_sku
   admin_enabled                 = false
@@ -51,7 +51,7 @@ module "container_apps_environment" {
   version = ">= 0.2.0"
 
   name                                = var.container_apps_environment_name
-  location                            = module.resource_group.location
+  location                            = var.location
   resource_group_name                 = module.resource_group.name
   log_analytics_workspace_customer_id = module.log_analytics.resource_id
   infrastructure_subnet_id            = var.infrastructure_subnet_id
@@ -64,7 +64,7 @@ module "container_app" {
   version = ">= 0.3.0"
 
   name                                  = var.container_app_name
-  location                              = module.resource_group.location
+  location                              = var.location
   resource_group_name                   = module.resource_group.name
   container_app_environment_resource_id = module.container_apps_environment.resource_id
   revision_mode                         = var.container_app_revision_mode
