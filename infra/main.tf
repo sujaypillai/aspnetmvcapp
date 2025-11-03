@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 3.80.0"
+      version = "4.19.0"
     }
   }
 }
@@ -14,8 +14,8 @@ provider "azurerm" {
 }
 
 module "resource_group" {
-  source  = "Azure/avm-res-az-resourcegroup/azurerm"
-  version = ">= 0.2.0"
+  source  = "Azure/avm-res-resources-resourcegroup/azurerm"
+  version = "0.2.1"
 
   name     = var.resource_group_name
   location = var.location
@@ -23,7 +23,7 @@ module "resource_group" {
 }
 
 module "log_analytics" {
-  source  = "Azure/avm-res-az-loganalyticsworkspace/azurerm"
+  source  = "Azure/avm-res-operationalinsights-workspace/azurerm"
   version = ">= 0.3.0"
 
   name                = var.log_analytics_workspace_name
@@ -34,7 +34,7 @@ module "log_analytics" {
 }
 
 module "container_registry" {
-  source  = "Azure/avm-res-az-containerregistry/azurerm"
+  source  = "Azure/avm-res-containerregistry-registry/azurerm"
   version = ">= 0.2.0"
 
   name                          = var.acr_name
@@ -47,7 +47,7 @@ module "container_registry" {
 }
 
 module "container_apps_environment" {
-  source  = "Azure/avm-res-az-containerappenvironment/azurerm"
+  source  = "Azure/avm-res-app-managedenvironment/azurerm"
   version = ">= 0.2.0"
 
   name                                = var.container_apps_environment_name
@@ -60,7 +60,7 @@ module "container_apps_environment" {
 }
 
 module "container_app" {
-  source  = "Azure/avm-res-az-containerapp/azurerm"
+  source  = "Azure/avm-res-app-containerapp/azurerm"
   version = ">= 0.3.0"
 
   name                                  = var.container_app_name
@@ -112,7 +112,7 @@ module "container_app" {
 }
 
 module "acr_pull_role" {
-  source  = "Azure/avm-res-az-authorization-roleassignment/azurerm"
+  source  = "Azure/avm-res-authorization-roleassignment/azurerm"
   version = ">= 0.1.0"
 
   scope                      = module.container_registry.resource_id
