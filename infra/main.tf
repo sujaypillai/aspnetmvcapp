@@ -7,6 +7,13 @@ terraform {
       version = "4.19.0"
     }
   }
+
+  backend "azurerm" {
+    resource_group_name  = "rg-terraform-state"
+    storage_account_name = "sttfstateaspnetmvc"
+    container_name       = "tfstate"
+    key                  = "aspnetmvcapp.terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
